@@ -1,0 +1,97 @@
+﻿@model PaginatedList<Irimies_Mircea_Proiect_Medii_de_Programare.Models.Jucator>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<form asp-action="Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Find by name: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
+            <input type="submit" value="Search" class="btn btn-default" /> |
+            <a asp-action="Index">Back to Full List</a>
+        </p>
+    </div>
+</form>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["TitleSortParm"]" asp-routecurrentFilter="@ViewData["CurrentFilter"]">Nume</a>
+            </th>
+            <th>
+                Prenume
+            </th>
+            <th>
+                Inaltime
+             </th>
+            <th>
+               <a asp-action="Index" asp-route-sortOrder="@ViewData["GreutateSortParm"]" asp-routecurrentFilter="@ViewData["CurrentFilter"]">Greutate in kg</a>
+            </th>
+            <th>
+                Data nasterii
+            </th>
+            <th>
+                Pozitie
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.nume)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.prenume)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.inaltime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.greutate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.data_nasterii)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.pozitie)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.echipa.nume_echipa)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.JucatorID">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.JucatorID">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.JucatorID">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex - 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-default @prevDisabled">
+    Previous
+</a>
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex + 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-default @nextDisabled">
+    Next
+</a>

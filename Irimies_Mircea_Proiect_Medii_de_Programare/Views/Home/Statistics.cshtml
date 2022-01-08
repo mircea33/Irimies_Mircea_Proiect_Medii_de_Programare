@@ -1,0 +1,26 @@
+﻿@model IEnumerable<Irimies_Mircea_Proiect_Medii_de_Programare.Models.TeamViewModels.OrderGroup>
+@{
+    ViewData["Title"] = "Team Statistics";
+}
+<h2>Team Statistics</h2>
+<table>
+    <tr>
+        <th>
+            Team ID
+        </th>
+        <th>
+            Number of players
+        </th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Echipa)
+            </td>
+            <td>
+                @item.JucatorCount
+            </td>
+        </tr>
+    }
+</table>

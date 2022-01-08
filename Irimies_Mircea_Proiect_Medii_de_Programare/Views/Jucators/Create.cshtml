@@ -1,0 +1,62 @@
+﻿@model Irimies_Mircea_Proiect_Medii_de_Programare.Models.Jucator
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Jucator</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="EchipaID" class="control-label"></label>
+                <select asp-for="EchipaID" class ="form-control" asp-items="ViewBag.EchipaID"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="nume" class="control-label"></label>
+                <input asp-for="nume" class="form-control" />
+                <span asp-validation-for="nume" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="prenume" class="control-label"></label>
+                <input asp-for="prenume" class="form-control" />
+                <span asp-validation-for="prenume" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="inaltime" class="control-label"></label>
+                <input asp-for="inaltime" class="form-control" />
+                <span asp-validation-for="inaltime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="greutate" class="control-label"></label>
+                <input asp-for="greutate" class="form-control" />
+                <span asp-validation-for="greutate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="data_nasterii" class="control-label"></label>
+                <input asp-for="data_nasterii" class="form-control" />
+                <span asp-validation-for="data_nasterii" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="pozitie" class="control-label"></label>
+                <input asp-for="pozitie" class="form-control" />
+                <span asp-validation-for="pozitie" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

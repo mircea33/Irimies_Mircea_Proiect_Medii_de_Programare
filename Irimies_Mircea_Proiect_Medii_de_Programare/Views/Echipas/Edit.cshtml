@@ -1,0 +1,39 @@
+﻿@model Irimies_Mircea_Proiect_Medii_de_Programare.Models.Echipa
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Echipa</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="EchipaID" />
+            <div class="form-group">
+                <label asp-for="ConferintaID" class="control-label"></label>
+                <select asp-for="ConferintaID" class="form-control" asp-items="ViewBag.ConferintaID"></select>
+                <span asp-validation-for="ConferintaID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="nume_echipa" class="control-label"></label>
+                <input asp-for="nume_echipa" class="form-control" />
+                <span asp-validation-for="nume_echipa" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
