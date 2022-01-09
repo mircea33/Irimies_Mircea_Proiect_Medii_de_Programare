@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using Irimies_Mircea_Proiect_Medii_de_Programare.Models;
 
 namespace Irimies_Mircea_Proiect_Medii_de_Programare.Controllers
@@ -14,11 +13,12 @@ namespace Irimies_Mircea_Proiect_Medii_de_Programare.Controllers
     {
         private RoleManager<IdentityRole> roleManager;
         private UserManager<IdentityUser> userManager;
-        public RolesController(RoleManager<IdentityRole> roleMgr,
-       UserManager<IdentityUser> userMrg)
+
+        public RolesController(RoleManager<IdentityRole> roleMgr, UserManager<IdentityUser> userMrg)
         {
             roleManager = roleMgr;
             userManager = userMrg;
+
         }
         public ViewResult Index() => View(roleManager.Roles);
 
@@ -36,6 +36,29 @@ namespace Irimies_Mircea_Proiect_Medii_de_Programare.Controllers
                     Errors(result);
             }
             return View(name);
+        }
+        private void Errors(IdentityResult result)
+        {
+            foreach (IdentityError error in result.Errors)
+                ModelState.AddModelError("", error.Description);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(string id)
+        {
+            IdentityRole role = await roleManager.FindByIdAsync(id);
+            if (role != null)
+            {
+                IdentityResult result = await
+               roleManager.DeleteAsync(role);
+                if (result.Succeeded)
+                    return RedirectToAction("Index");
+                else
+                    Errors(result);
+            }
+            else
+                ModelState.AddModelError("", "No role found");
+            return View("Index", roleManager.Roles);
         }
         public async Task<IActionResult> Update(string id)
         {
@@ -63,7 +86,7 @@ namespace Irimies_Mircea_Proiect_Medii_de_Programare.Controllers
             {
                 foreach (string userId in model.AddIds ?? new string[] { })
                 {
-                    IdentityUser user = (IdentityUser)await userManager.FindByIdAsync(userId);
+                    IdentityUser user = await userManager.FindByIdAsync(userId);
                     if (user != null)
                     {
                         result = await userManager.AddToRoleAsync(user,
@@ -75,7 +98,7 @@ namespace Irimies_Mircea_Proiect_Medii_de_Programare.Controllers
                 foreach (string userId in model.DeleteIds ?? new string[] {
 })
                 {
-                    IdentityUser user = (IdentityUser)await userManager.FindByIdAsync(userId);
+                    IdentityUser user = await userManager.FindByIdAsync(userId);
                     if (user != null)
                     {
                         result = await
@@ -90,29 +113,5 @@ namespace Irimies_Mircea_Proiect_Medii_de_Programare.Controllers
             else
                 return await Update(model.RoleId);
         }
-        private void Errors(IdentityResult result)
-        {
-            foreach (IdentityError error in result.Errors)
-                ModelState.AddModelError("", error.Description);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Delete(string id)
-        {
-            IdentityRole role = await roleManager.FindByIdAsync(id);
-            if (role != null)
-            {
-                IdentityResult result = await
-               roleManager.DeleteAsync(role);
-                if (result.Succeeded)
-                    return RedirectToAction("Index");
-                else
-                    Errors(result);
-            }
-            else
-                ModelState.AddModelError("", "No role found");
-            return View("Index", roleManager.Roles);
-        }
-
     }
 }
