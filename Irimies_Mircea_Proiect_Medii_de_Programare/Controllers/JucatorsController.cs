@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Irimies_Mircea_Proiect_Medii_de_Programare.Data;
 using Irimies_Mircea_Proiect_Medii_de_Programare.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Irimies_Mircea_Proiect_Medii_de_Programare
 {
+    [Authorize(Roles = "Employee")]
     public class JucatorsController : Controller
     {
         private readonly TeamContext _context;
@@ -20,6 +22,7 @@ namespace Irimies_Mircea_Proiect_Medii_de_Programare
         }
 
         // GET: Jucators
+        [AllowAnonymous]
         public async Task<IActionResult> Index(
   string sortOrder,
   string currentFilter,
@@ -62,6 +65,7 @@ namespace Irimies_Mircea_Proiect_Medii_de_Programare
            1, pageSize));
         }
         // GET: Jucators/Details/5
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)

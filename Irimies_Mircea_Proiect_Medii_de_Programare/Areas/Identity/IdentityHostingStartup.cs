@@ -19,8 +19,9 @@ namespace Irimies_Mircea_Proiect_Medii_de_Programare.Areas.Identity
                     options.UseSqlServer(
                         context.Configuration.GetConnectionString("Irimies_Mircea_Proiect_Medii_de_ProgramareContextConnection")));
 
-                services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                    .AddEntityFrameworkStores<Irimies_Mircea_Proiect_Medii_de_ProgramareContext>();
+                services.AddIdentity<IdentityUser, IdentityRole>(options =>
+options.SignIn.RequireConfirmedAccount = true)
+ .AddEntityFrameworkStores<Irimies_Mircea_Proiect_Medii_de_ProgramareContext>();
             });
         }
     }
