@@ -14,7 +14,8 @@ namespace Irimies_Mircea_Proiect_Medii_de_Programare.Areas.Identity
     {
         public void Configure(IWebHostBuilder builder)
         {
-            builder.ConfigureServices((context, services) => {
+            builder.ConfigureServices((context, services) =>
+            {
                 services.AddDbContext<Irimies_Mircea_Proiect_Medii_de_ProgramareContext>(options =>
                     options.UseSqlServer(
                         context.Configuration.GetConnectionString("Irimies_Mircea_Proiect_Medii_de_ProgramareContextConnection")));
